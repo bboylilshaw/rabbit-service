@@ -15,12 +15,12 @@ import java.lang.annotation.Target;
  */
 @Target({ElementType.TYPE, ElementType.METHOD, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@RabbitListener(
-        bindings = @QueueBinding(
-                value = @Queue(value = "my.queue", durable = "true", ignoreDeclarationExceptions = "true"),
-                exchange = @Exchange(value = "my.exchange", durable = "true", ignoreDeclarationExceptions = "true"),
-                key = "my.routing.key"
-        )
-)
-public @interface WorkerListener {
+//@RabbitListener(
+//        bindings = @QueueBinding(
+//                value = @Queue(value = "test.queue", durable = "true", ignoreDeclarationExceptions = "true"),
+//                exchange = @Exchange(value = "test.exchange", ignoreDeclarationExceptions = "true"),
+//                key = "test.routing.key"
+//        )
+//)
+public @interface MessageListener {
 }

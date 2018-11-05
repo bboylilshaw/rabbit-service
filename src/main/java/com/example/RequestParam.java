@@ -1,24 +1,14 @@
 package com.example;
 
+import lombok.Data;
+
 /**
  * @author Jason Xiao
  */
+
+@Data
 public class RequestParam {
 
-    private int id;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    @Override
-    public String toString() {
-        return "RequestParam{" +
-                "id=" + id +
-                '}';
-    }
+    private Long id;
+    private String name;
 }
