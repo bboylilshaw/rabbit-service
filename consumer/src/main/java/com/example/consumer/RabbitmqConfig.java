@@ -1,5 +1,7 @@
 package com.example.consumer;
 
+import com.example.common.domain.Queues;
+import com.example.common.domain.RoutingKey;
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.DirectExchange;
@@ -23,15 +25,6 @@ public class RabbitmqConfig {
     @Value("${spring.rabbitmq.template.exchange}")
     private String EXCHANGE;
 
-    @Value("${spring.rabbitmq.template.routing-key}")
-    private String ROUTING_KEY;
-
-    @Value("${spring.rabbitmq.listener.default.queue}")
-    public String QUEUE;
-
-    @Value("${spring.rabbitmq.listener.default.reply.queue}")
-    private String REPLY_QUEUE;
-
     @Bean
     public MessageConverter messageConverter() {
         return new Jackson2JsonMessageConverter();
@@ -41,13 +34,18 @@ public class RabbitmqConfig {
     public AmqpAdmin amqpAdmin(ConnectionFactory connectionFactory) {
         RabbitAdmin rabbitAdmin = new RabbitAdmin(connectionFactory);
         DirectExchange exchange = new DirectExchange(EXCHANGE, true, false);
-        Queue queue = new Queue(QUEUE, true);
-        Queue replyQueue = new Queue(REPLY_QUEUE, true);
+        Queue queue = new Queue(Queues.DEFAULT, true);
+        Queue replyQueue = new Queue(Queues.DEFAULT_REPLY, true);
         rabbitAdmin.setAutoStartup(true);
         rabbitAdmin.declareExchange(exchange);
         rabbitAdmin.declareQueue(queue);
         rabbitAdmin.declareQueue(replyQueue);
-        rabbitAdmin.declareBinding(BindingBuilder.bind(queue).to(exchange).with(ROUTING_KEY));
+        rabbitAdmin.declareBinding(BindingBuilder.bind(queue).to(exchange).with(RoutingKey.DEFAULT));
+
+        Queue rpcQueue = new Queue(Queues.RPC, true, false, false);
+        rabbitAdmin.declareQueue(rpcQueue);
+        rabbitAdmin.declareBinding(BindingBuilder.bind(rpcQueue).to(exchange).with(RoutingKey.RPC));
+
         rabbitAdmin.setIgnoreDeclarationExceptions(true);
         return rabbitAdmin;
     }

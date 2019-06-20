@@ -1,6 +1,7 @@
 package com.example.producer;
 
 import com.example.common.domain.RequestParam;
+import com.example.common.domain.RoutingKey;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,13 @@ public class DemoController {
 //            });
 //        }
         return ResponseEntity.ok("OK");
+    }
+
+    @PostMapping(value = "/send_and_receive")
+    public ResponseEntity sendAndReceive() {
+        RequestParam req = new RequestParam(1L, "Jason Xiao");
+        Object response = rabbitTemplate.convertSendAndReceive(RoutingKey.RPC.name(), req);
+        return ResponseEntity.ok(response);
     }
 
 //    @PostMapping(value = "/async")
