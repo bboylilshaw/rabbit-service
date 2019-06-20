@@ -1,0 +1,24 @@
+plugins {
+	id 'java'
+    id 'org.springframework.boot' version '2.1.6.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.6.RELEASE'
+}
+
+dependencies {
+    implementation project(':common')
+    
+    implementation('org.springframework.boot:spring-boot-starter-amqp')
+    implementation('com.fasterxml.jackson.core:jackson-core')
+    implementation('com.fasterxml.jackson.core:jackson-databind')
+
+    compileOnly("org.projectlombok:lombok:1.18.2")
+    annotationProcessor("org.projectlombok:lombok:1.18.2")
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:2.1.6.RELEASE"
+    }
+}

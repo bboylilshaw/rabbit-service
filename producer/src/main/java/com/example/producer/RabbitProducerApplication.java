@@ -1,12 +1,12 @@
-package com.example;
+package com.example.producer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class RabbitServiceApplication {
+public class RabbitProducerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(RabbitServiceApplication.class, args);
+		SpringApplication.run(RabbitProducerApplication.class, args);
 	}
 }

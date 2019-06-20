@@ -1,0 +1,5 @@
+rootProject.name = 'spring-rabbitmq-demo'
+
+include 'producer'
+include 'consumer'
+include 'common'
