@@ -15,6 +15,12 @@ public class DefaultConsumer {
     @RabbitListener(queues = "#{T(com.example.common.domain.Queues).DEFAULT}")
     public void onMessage(Message<Object> message) {
         log.info("Received message: {}", message);
+        try {
+            Thread.sleep(2000L);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        log.info("Finished consuming message: {}", message);
     }
 
 }
